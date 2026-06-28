@@ -1,0 +1,129 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Raqib signature rules — DETECTION AS CODE
+#
+# Each rule is a portable, version-controlled detection (think Sigma, but for the
+# LLM attack surface). The signature layer is the cheap first tier of defence in
+# depth: pure regex, no model call, runs on every prompt.
+#
+# Fields:
+#   id          unique rule id (SIG-<class>-NNN)
+#   category    normalised attack category (drives the dashboard heatmap)
+#   title       human-readable detection name
+#   severity    info | low | medium | high | critical
+#   confidence  0..1 base confidence for a match
+#   owasp_llm   OWASP LLM Top 10 (2025) id
+#   mitre_atlas MITRE ATLAS technique id
+#   direction   inbound (prompt) | outbound (response)
+#   patterns    list of case-insensitive regexes; ANY match fires the rule
+#   references  optional supporting links/notes
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: SIG-INJ-001
+  category: prompt_injection
+  title: Instruction override attempt
+  severity: high
+  confidence: 0.85
+  owasp_llm: "LLM01:2025"
+  mitre_atlas: "AML.T0051.000"
+  direction: inbound
+  patterns:
+    - '(?i)\bignore\s+(all\s+|any\s+|the\s+|your\s+)?(previous|prior|above|earlier|preceding)\s+(instructions?|prompts?|rules?|messages?|context)'
+    - '(?i)\bdisregard\s+(all\s+|the\s+|your\s+)?(previous|prior|above|system)\s+(instructions?|prompt|rules?|guidelines?)'
+    - '(?i)\bforget\s+(everything|all|your)\b.*\b(instructions?|told|above|previous)'
+    - '(?i)\b(do\s+not|don.?t)\s+(follow|obey|adhere\s+to)\b.*\b(previous|prior|system|original)\s+(instructions?|prompt|rules?)'
+
+- id: SIG-INJ-002
+  category: prompt_injection
+  title: New-instructions / role reassignment injection
+  severity: high
+  confidence: 0.75
+  owasp_llm: "LLM01:2025"
+  mitre_atlas: "AML.T0051.000"
+  direction: inbound
+  patterns:
+    - '(?i)\byou\s+are\s+now\b.*\b(a|an|the)\b'
+    - '(?i)\bnew\s+(instructions?|rules?|system\s+prompt|persona)\s*[:\-]'
+    - '(?i)\bfrom\s+now\s+on\b.*\b(you|act|behave|respond)'
+    - '(?i)\bpretend\s+(you\s+are|to\s+be)\b'
+
+- id: SIG-JB-001
+  category: jailbreak
+  title: Known jailbreak persona (DAN / developer mode / unfiltered)
+  severity: high
+  confidence: 0.9
+  owasp_llm: "LLM01:2025"
+  mitre_atlas: "AML.T0054"
+  direction: inbound
+  patterns:
+    - '(?i)\bDAN\b.*\b(mode|jailbreak|do\s+anything\s+now)'
+    - '(?i)\bdo\s+anything\s+now\b'
+    - '(?i)\bdeveloper\s+mode\b'
+    - '(?i)\b(enable|activate|switch\s+to)\b.*\b(unfiltered|uncensored|no[-\s]?restrictions?|god\s+mode)\b'
+    - '(?i)\byou\s+have\s+no\s+(restrictions?|filters?|guidelines?|rules?)'
+
+- id: SIG-JB-002
+  category: jailbreak
+  title: Safety-bypass framing (hypothetical / fiction / grandma exploit)
+  severity: medium
+  confidence: 0.6
+  owasp_llm: "LLM01:2025"
+  mitre_atlas: "AML.T0054"
+  direction: inbound
+  patterns:
+    - '(?i)\b(hypothetically|in\s+a\s+fictional\s+(world|story|scenario)|for\s+a\s+(novel|story|screenplay))\b.*\b(how\s+to|steps?\s+to|instructions?)'
+    - '(?i)\bmy\s+(deceased|late|dead)\s+grandm(a|other)\b.*\b(used\s+to|would)'
+    - '(?i)\bpretend\s+(there\s+are|you\s+have)\s+no\s+(rules?|filters?|restrictions?)'
+
+- id: SIG-EXFIL-001
+  category: system_prompt_extraction
+  title: System-prompt / instruction extraction attempt
+  severity: high
+  confidence: 0.8
+  owasp_llm: "LLM07:2025"
+  mitre_atlas: "AML.T0056"
+  direction: inbound
+  patterns:
+    - '(?i)\b(print|reveal|show|repeat|display|output|tell\s+me)\b.*\b(system\s+prompt|initial\s+(instructions?|prompt)|your\s+(instructions?|rules?|prompt|guidelines?))'
+    - '(?i)\brepeat\s+(the\s+)?(words?|text)\s+above\b'
+    - '(?i)\bwhat\s+(were|are)\s+your\s+(original|initial|system)\s+(instructions?|prompt)'
+    - '(?i)\beverything\s+above\s+this\s+(line|message|point)\b'
+
+- id: SIG-EVAD-001
+  category: evasion
+  title: Encoding / obfuscation evasion (base64 / hex / leetspeak)
+  severity: medium
+  confidence: 0.55
+  owasp_llm: "LLM01:2025"
+  mitre_atlas: "AML.T0051.000"
+  direction: inbound
+  patterns:
+    - '(?i)\b(decode|from\s+base64|base64\s*decode|atob)\b'
+    - '(?i)\b(rot13|hex\s*decode|fromhex|unescape)\b'
+    - '[A-Za-z0-9+/]{40,}={0,2}'          # long base64-looking blob
+    - '(?i)\bi\s*gn\s*o\s*r\s*e\b'        # spaced-out "ignore" evasion
+
+- id: SIG-AGENCY-001
+  category: excessive_agency
+  title: Tool / agent abuse — destructive or exfiltration action
+  severity: critical
+  confidence: 0.7
+  owasp_llm: "LLM06:2025"
+  mitre_atlas: "AML.T0053"
+  direction: inbound
+  patterns:
+    - '(?i)\b(delete|drop|truncate|rm\s+-rf|wipe)\b.*\b(all|database|table|files?|users?|everything)'
+    - '(?i)\b(send|exfiltrate|forward|email|post)\b.*\b(to|at)\b.*\b(http|@|webhook|attacker)'
+    - '(?i)\b(execute|run|eval)\b.*\b(this\s+)?(command|code|shell|payload|script)\b'
+    - '(?i)\btransfer\b.*\b(funds?|money|balance)\b'
+
+- id: SIG-DOS-001
+  category: unbounded_consumption
+  title: Unbounded consumption / repetition amplification
+  severity: low
+  confidence: 0.5
+  owasp_llm: "LLM10:2025"
+  mitre_atlas: "AML.T0048"
+  direction: inbound
+  patterns:
+    - '(?i)\brepeat\b.*\b(forever|infinitely|\d{4,}\s+times|until\s+you\s+run\s+out)'
+    - '(?i)\b(the\s+word\s+\w+\s+){8,}'

@@ -1,0 +1,46 @@
+# ---- Secrets & environment ----
+.env
+*.env
+!*.env.example
+**/secrets/*
+*.key
+*.pem
+*_api_key*
+credentials.json
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+htmlcov/
+
+# ---- Node / tooling ----
+node_modules/
+
+# ---- Runtime data (event DBs, SIEM indices, Docker volumes, logs) ----
+*.db
+*.sqlite
+*.sqlite3
+**/data/
+**/*.log
+wazuh/config/wazuh_indexer/certs/
+redteam/reports/*.local.*
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+~$*          # MS Office lock files (e.g. ~$README.docx)
+
+# ---- Local scratch ----
+scratch/
+*.local
