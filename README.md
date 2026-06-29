@@ -1,4 +1,4 @@
-# Raqib (رقيب) — Self-Hosted AI-SOC for LLM Applications
+# Raqib — Self-Hosted AI-SOC for LLM Applications
 
 > **A defensive security gateway + detection-and-response platform that sits in front of any LLM app and gives it SOC-grade protection.**
 > It detects attacks *against the AI* — prompt injection, jailbreaks, data/secret leakage, system-prompt extraction, tool/agent abuse — in real time, logs each as a structured security event mapped to the **OWASP LLM Top 10 (2025)** and **MITRE ATLAS**, auto-responds with **SOAR playbooks**, surfaces everything on a **SOC dashboard**, and ships with a **red-team harness that proves the detections work**.
@@ -10,10 +10,6 @@
 [![$0 stack](https://img.shields.io/badge/Cost-%240%20fully%20local-brightgreen.svg)](#the-0-self-hosted-stack)
 
 ---
-
-## The one-liner for a recruiter
-
-> *"I learned to break LLMs with Garak and PyRIT — so I built the SOC platform that detects and stops those attacks. It enriches and triages every AI attack as a structured security event mapped to OWASP-LLM and MITRE ATLAS, runs automated response playbooks, feeds a Wazuh SIEM, and I measured its real detection and false-positive rates with a built-in red-team harness."*
 
 This is **offense-informed defense** for the threat model that WAFs and API gateways were never built for — the threat model that now leads the [OWASP Top 10 for LLM Applications 2025](https://owasp.org/www-project-top-10-for-large-language-model-applications/) and that G42/Core42, Help AG, and CPX are actively building practices around.
 
