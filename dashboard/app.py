@@ -21,7 +21,9 @@ import httpx
 import pandas as pd
 import streamlit as st
 
-API_DEFAULT = os.environ.get("RAQIB_API_URL", "http://localhost:8000")
+# Use 127.0.0.1 (not "localhost") so it works even when localhost resolves to IPv6
+# ::1 first — the gateway (uvicorn) listens on IPv4 127.0.0.1.
+API_DEFAULT = os.environ.get("RAQIB_API_URL", "http://127.0.0.1:8000")
 
 SEV_ORDER = ["critical", "high", "medium", "low", "info"]
 SEV_COLORS = {

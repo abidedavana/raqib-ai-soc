@@ -114,6 +114,10 @@ No paid APIs, no cloud bill. **Self-hosted is a feature**: it's exactly what reg
 
 ## Quick start
 
+**Easiest — one double-click:** run **`start.bat`** in the project folder (or the **Raqib AI-SOC** shortcut on your Desktop). It sets up everything the first time, starts the gateway + dashboard, loads demo attacks, and opens your browser. To stop, double-click **`stop.bat`**.
+
+Prefer to run it by hand?
+
 ```powershell
 # 1. Gateway (runs with a deterministic mock model out of the box — no Ollama needed yet)
 cd gateway
