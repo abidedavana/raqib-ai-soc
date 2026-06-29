@@ -1,0 +1,84 @@
+<!--
+  Raqib AI-SOC -> Wazuh custom rules.
+
+  Raqib forwards each detection as a JSON line (see gateway/app/events/siem.py),
+  which the Wazuh manager ingests via a <localfile log_format="json"> entry. The
+  manager's built-in JSON decoder exposes the fields as raqib.* ; these rules map
+  them to native Wazuh alert levels and groups so AI attacks appear in the SIEM
+  alongside the rest of the SOC's telemetry.
+
+  Install: copy this file to /var/ossec/etc/rules/ on the manager (files in that
+  directory are auto-loaded), then restart the manager. See wazuh/README.md.
+
+  Rule IDs 100600-100699 are reserved here for Raqib (>= 100000 is user space).
+-->
+<group name="raqib,ai_soc,">
+
+  <!-- Base: any JSON event carrying a raqib.id is a Raqib security event -->
+  <rule id="100600" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="raqib.id" type="pcre2">.+</field>
+    <description>Raqib AI-SOC: security event ($(raqib.category))</description>
+    <options>no_full_log</options>
+  </rule>
+
+  <!-- Severity-driven escalation -->
+  <rule id="100610" level="12">
+    <if_sid>100600</if_sid>
+    <field name="raqib.severity" type="pcre2">^critical$</field>
+    <description>Raqib: CRITICAL AI attack - $(raqib.title) [$(raqib.owasp_llm) / $(raqib.mitre_atlas)]</description>
+    <group>raqib_critical,attack,</group>
+  </rule>
+
+  <rule id="100611" level="10">
+    <if_sid>100600</if_sid>
+    <field name="raqib.severity" type="pcre2">^high$</field>
+    <description>Raqib: HIGH AI attack - $(raqib.title) [$(raqib.owasp_llm)]</description>
+    <group>raqib_high,attack,</group>
+  </rule>
+
+  <rule id="100612" level="7">
+    <if_sid>100600</if_sid>
+    <field name="raqib.severity" type="pcre2">^medium$</field>
+    <description>Raqib: medium AI attack - $(raqib.title) [$(raqib.owasp_llm)]</description>
+    <group>raqib_medium,</group>
+  </rule>
+
+  <rule id="100613" level="4">
+    <if_sid>100600</if_sid>
+    <field name="raqib.severity" type="pcre2">^(low|info)$</field>
+    <description>Raqib: low/info AI event - $(raqib.title)</description>
+    <group>raqib_low,</group>
+  </rule>
+
+  <!-- High-signal categories worth their own alert -->
+  <rule id="100620" level="12">
+    <if_sid>100600</if_sid>
+    <field name="raqib.category" type="pcre2">^system_prompt_extraction$</field>
+    <description>Raqib: system-prompt extraction (LLM07) - $(raqib.title)</description>
+    <group>raqib_critical,exfiltration,</group>
+  </rule>
+
+  <rule id="100621" level="12">
+    <if_sid>100600</if_sid>
+    <field name="raqib.category" type="pcre2">^secret_leak$</field>
+    <description>Raqib: secret/credential leak in model output (LLM02) - $(raqib.title)</description>
+    <group>raqib_critical,exfiltration,</group>
+  </rule>
+
+  <rule id="100622" level="12">
+    <if_sid>100600</if_sid>
+    <field name="raqib.category" type="pcre2">^excessive_agency$</field>
+    <description>Raqib: tool/agent abuse (LLM06) - $(raqib.title)</description>
+    <group>raqib_critical,</group>
+  </rule>
+
+  <!-- Track SOAR responses: an attack that was actively blocked -->
+  <rule id="100630" level="10">
+    <if_sid>100600</if_sid>
+    <field name="raqib.verdict" type="pcre2">^block$</field>
+    <description>Raqib: attack BLOCKED by SOAR - $(raqib.title)</description>
+    <group>raqib_response,</group>
+  </rule>
+
+</group>

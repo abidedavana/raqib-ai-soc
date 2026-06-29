@@ -1,0 +1,12 @@
+<!--
+  Add this <localfile> block inside the <ossec_config> element of the Wazuh
+  manager's configuration (the single-node deployment bind-mounts this as
+  config/wazuh_cluster/wazuh_manager.conf), then restart the manager.
+
+  It tells Wazuh to tail Raqib's JSON event log. The path is the IN-CONTAINER
+  path; bind-mount the host folder wazuh/logs to /var/log/raqib (see README).
+-->
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/raqib/raqib-events.json</location>
+</localfile>

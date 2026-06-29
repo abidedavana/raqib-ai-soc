@@ -31,6 +31,7 @@ node_modules/
 **/data/
 **/*.log
 wazuh/config/wazuh_indexer/certs/
+wazuh/logs/*.json
 redteam/reports/*.local.*
 
 # ---- OS / editor ----

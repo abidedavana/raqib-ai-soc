@@ -37,6 +37,10 @@ class Settings(BaseSettings):
 
     # ── Wazuh SIEM forwarding ───────────────────────────────────────
     wazuh_enabled: bool = False
+    # how events reach Wazuh: "file" (Wazuh reads a JSON log — recommended) or
+    # "syslog" (UDP). File mode is more robust and is the documented default.
+    wazuh_mode: Literal["file", "syslog"] = "file"
+    wazuh_log_file: str = "../wazuh/logs/raqib-events.json"
     wazuh_host: str = "127.0.0.1"
     wazuh_port: int = 514
 

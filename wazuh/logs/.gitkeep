@@ -1,0 +1,3 @@
+# Raqib writes its JSON security-event log here (raqib-events.json) when
+# WAZUH_ENABLED=true and WAZUH_MODE=file. The Wazuh manager tails it via a
+# bind-mount to /var/log/raqib. The .json file itself is git-ignored.
