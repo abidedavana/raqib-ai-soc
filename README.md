@@ -13,9 +13,10 @@
   <img src="docs/diagrams/architecture.svg" alt="Raqib AI-SOC architecture: gateway, layered detection, SOAR, event pipeline, dashboard and Wazuh SIEM" width="920">
 </p>
 
-<!-- 📸 Add a dashboard screenshot once you've run it (see docs/quickstart.md), then uncomment:
-<p align="center"><img src="docs/screenshots/dashboard.png" alt="Raqib SOC dashboard" width="920"></p>
--->
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" alt="Raqib SOC dashboard — live attack feed, OWASP/ATLAS heatmap, SOAR verdicts, top offenders" width="920">
+  <br><em>The live SOC console — attacks against the AI as OWASP/ATLAS-tagged events, with heatmap, SOAR verdicts and the event feed.</em>
+</p>
 
 ---
 
@@ -97,6 +98,17 @@ Raqib does **not** claim to "solve prompt injection" — that's a fundamental li
 | Red-team payloads | curated, Garak/PyRIT-style | free |
 
 No paid APIs, no cloud bill. **Self-hosted is a feature**: it's exactly what regulated UAE government / critical-infrastructure workloads require.
+
+---
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/gateway-swagger.png" alt="Raqib gateway OpenAPI docs — /v1/chat proxy and /api/* dashboard endpoints" width="760">
+  <br><em>The gateway's OpenAPI surface — the <code>/v1/chat</code> proxy and the read-only <code>/api/*</code> the dashboard consumes. (The live dashboard is shown at the top.)</em>
+</p>
+
+> A Wazuh SIEM alert view will be added once the SIEM stack is stood up — see [`wazuh/README.md`](wazuh/README.md).
 
 ---
 
