@@ -100,7 +100,7 @@
     - '(?i)\b(decode|from\s+base64|base64\s*decode|atob)\b'
     - '(?i)\b(rot13|hex\s*decode|fromhex|unescape)\b'
     - '[A-Za-z0-9+/]{40,}={0,2}'          # long base64-looking blob
-    - '(?i)\bi\s*gn\s*o\s*r\s*e\b'        # spaced-out "ignore" evasion
+    - '(?i)\bi\s+g\s+n\s+o\s+r\s+e\b'     # deliberately spaced-out "ignore" (requires real separators)
 
 - id: SIG-AGENCY-001
   category: excessive_agency
