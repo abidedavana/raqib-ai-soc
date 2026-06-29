@@ -1,0 +1,5 @@
+# Raqib SOC dashboard (Streamlit) dependencies
+streamlit==1.41.1
+httpx==0.28.1
+pandas==2.2.3
+altair==5.5.0

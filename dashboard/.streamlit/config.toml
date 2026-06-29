@@ -1,0 +1,10 @@
+# Dark "SOC console" theme so screenshots look the part.
+[theme]
+base = "dark"
+primaryColor = "#e8590c"
+backgroundColor = "#0e1117"
+secondaryBackgroundColor = "#161b22"
+textColor = "#e6edf3"
+
+[server]
+headless = true
