@@ -80,6 +80,15 @@ else:
 st.title("Raqib AI-SOC — Live Console")
 st.caption("Attacks against the AI, mapped to OWASP LLM Top 10 (2025) + MITRE ATLAS")
 
+with st.expander("ℹ️ What am I looking at?"):
+    st.markdown(
+        "This is a **live security dashboard for an AI chatbot**. Each row in the feed below "
+        "is a message someone sent to the AI that Raqib flagged as an **attack** — for example, "
+        "trying to trick the AI into ignoring its rules or leaking secrets. Raqib automatically "
+        "**blocks** or **redacts** the dangerous ones. In this demo the data comes from a built-in "
+        "test (there is no real attacker), and everything runs locally on this machine."
+    )
+
 if herr:
     st.error(
         f"Could not reach the gateway at `{api_url}` ({herr}).\n\n"

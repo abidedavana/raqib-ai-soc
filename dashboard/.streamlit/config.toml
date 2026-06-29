@@ -8,3 +8,7 @@ textColor = "#e6edf3"
 
 [server]
 headless = true
+
+[browser]
+# Don't send anonymous usage stats anywhere — keep everything fully local.
+gatherUsageStats = false

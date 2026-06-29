@@ -1,6 +1,6 @@
 # Raqib — Red-Team Detection Report
 
-_Generated: 2026-06-29T12:55:56+00:00 · backend: mock vulnerable model · judge: always_
+_Generated: 2026-06-29T12:58:57+00:00 · backend: mock vulnerable model · judge: always_
 
 > Measured, not marketed. Raqib does **not** claim to solve prompt injection — this report states real detection and false-positive rates and documents every miss.
 
