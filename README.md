@@ -71,7 +71,7 @@ Raqib mirrors how mature detection works in a real SOC — **defence in depth**,
 
 Every hit is tagged with an **OWASP-LLM ID** and a **MITRE ATLAS technique**, assigned a severity, and run through SOAR for an automated verdict (`allow` / `flag` / `sanitize` / `redact` / `block`). To keep latency sane, the engine is **tiered**: regex always runs; the LLM-judge runs only on suspicious or configured traffic.
 
-Full mapping: [`docs/owasp-atlas-mapping.md`](docs/owasp-atlas-mapping.md) · Methodology: [`docs/detection-methodology.md`](docs/detection-methodology.md)
+**Docs:** [Architecture](docs/00-architecture.md) · [Detection methodology](docs/detection-methodology.md) · [OWASP/ATLAS mapping](docs/owasp-atlas-mapping.md) · [Prompt-injection IR runbook](docs/runbooks/prompt-injection-IR.md) · [Quickstart](docs/quickstart.md)
 
 ---
 
@@ -125,13 +125,13 @@ Full setup incl. Wazuh + dashboard: [`docs/quickstart.md`](docs/quickstart.md)
 ## Roadmap / build status
 
 - [x] Repo + architecture + OWASP/ATLAS mapping
-- [ ] **Phase 1** — gateway proxy + demo vulnerable chatbot
-- [ ] **Phase 2** — layered detection engine
-- [ ] **Phase 3** — event pipeline + SOAR playbooks
-- [ ] **Phase 4** — SOC dashboard
-- [ ] **Phase 5** — red-team harness + measured report
-- [ ] **Phase 6** — Wazuh SIEM sink
-- [ ] **Phase 7** — docs, runbooks, CI, demo video
+- [x] **Phase 1** — gateway proxy + demo vulnerable chatbot
+- [x] **Phase 2** — layered detection engine
+- [x] **Phase 3** — event pipeline + SOAR playbooks
+- [x] **Phase 4** — SOC dashboard
+- [x] **Phase 5** — red-team harness + measured report (76.9% detection / 10% FP, measured)
+- [ ] **Phase 6** — Wazuh SIEM sink *(needs Docker + WSL2)*
+- [x] **Phase 7** — docs, runbooks, CI *(demo video still TODO)*
 
 ---
 
