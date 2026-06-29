@@ -1,0 +1,89 @@
+<svg viewBox="0 0 1040 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d" font-family="Segoe UI, Arial, sans-serif">
+  <title id="t">Raqib AI-SOC architecture</title>
+  <desc id="d">A user or attacker sends prompts to the Raqib FastAPI gateway, which runs layered detection, SOAR response and an event pipeline before reaching the LLM. Events flow to a SQLite store, the SOC dashboard and Wazuh SIEM, consumed by a SOC analyst. A red-team harness validates the gateway.</desc>
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#8b949e"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1040" height="600" rx="14" fill="#0e1117"/>
+  <text x="32" y="40" fill="#e6edf3" font-size="22" font-weight="700">Raqib AI-SOC — detection &amp; response for LLM apps</text>
+
+  <!-- legend -->
+  <rect x="770" y="22" width="14" height="14" rx="3" fill="#e8590c"/>
+  <text x="790" y="34" fill="#9aa4b2" font-size="12">Raqib core</text>
+  <rect x="868" y="22" width="14" height="14" rx="3" fill="#3b82f6"/>
+  <text x="888" y="34" fill="#9aa4b2" font-size="12">SOC infra</text>
+
+  <!-- User / Attacker -->
+  <rect x="32" y="110" width="150" height="72" rx="8" fill="#161b22" stroke="#b00020" stroke-width="1.5"/>
+  <text x="107" y="142" fill="#e6edf3" font-size="14" font-weight="600" text-anchor="middle">User / Attacker</text>
+  <text x="107" y="162" fill="#9aa4b2" font-size="11" text-anchor="middle">prompts (untrusted)</text>
+
+  <!-- Red-team harness -->
+  <rect x="32" y="300" width="150" height="74" rx="8" fill="#161b22" stroke="#e8590c" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="107" y="332" fill="#e6edf3" font-size="13" font-weight="600" text-anchor="middle">Red-team harness</text>
+  <text x="107" y="351" fill="#9aa4b2" font-size="11" text-anchor="middle">measured report</text>
+  <text x="107" y="366" fill="#9aa4b2" font-size="11" text-anchor="middle">77% det · 10% FP</text>
+
+  <!-- Gateway container -->
+  <rect x="215" y="70" width="440" height="322" rx="10" fill="#10151c" stroke="#e8590c" stroke-width="2"/>
+  <text x="235" y="98" fill="#e8590c" font-size="15" font-weight="700">Raqib Gateway · FastAPI</text>
+
+  <rect x="235" y="112" width="400" height="74" rx="7" fill="#161b22" stroke="#30363d"/>
+  <text x="250" y="138" fill="#e6edf3" font-size="14" font-weight="600">① Detection engine</text>
+  <text x="250" y="159" fill="#9aa4b2" font-size="11.5">signatures · LLM-judge · output inspection</text>
+  <text x="250" y="176" fill="#9aa4b2" font-size="11.5">tags every hit to OWASP-LLM + MITRE ATLAS</text>
+
+  <rect x="235" y="200" width="400" height="62" rx="7" fill="#161b22" stroke="#30363d"/>
+  <text x="250" y="226" fill="#e6edf3" font-size="14" font-weight="600">② SOAR playbooks</text>
+  <text x="250" y="247" fill="#9aa4b2" font-size="11.5">block · sanitize · redact · quarantine</text>
+
+  <rect x="235" y="276" width="400" height="62" rx="7" fill="#161b22" stroke="#30363d"/>
+  <text x="250" y="302" fill="#e6edf3" font-size="14" font-weight="600">③ Event pipeline</text>
+  <text x="250" y="323" fill="#9aa4b2" font-size="11.5">structured SecurityEvent · severity · verdict</text>
+
+  <!-- Model -->
+  <rect x="700" y="118" width="160" height="74" rx="8" fill="#161b22" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="780" y="150" fill="#e6edf3" font-size="14" font-weight="600" text-anchor="middle">LLM model</text>
+  <text x="780" y="170" fill="#9aa4b2" font-size="11" text-anchor="middle">Ollama / mock</text>
+
+  <!-- Event store -->
+  <rect x="300" y="420" width="170" height="56" rx="8" fill="#161b22" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="385" y="445" fill="#e6edf3" font-size="13" font-weight="600" text-anchor="middle">Event store</text>
+  <text x="385" y="463" fill="#9aa4b2" font-size="11" text-anchor="middle">SQLite</text>
+
+  <!-- Dashboard -->
+  <rect x="215" y="508" width="180" height="62" rx="8" fill="#161b22" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="305" y="534" fill="#e6edf3" font-size="13" font-weight="600" text-anchor="middle">SOC dashboard</text>
+  <text x="305" y="552" fill="#9aa4b2" font-size="11" text-anchor="middle">feed · heatmap</text>
+
+  <!-- Wazuh -->
+  <rect x="430" y="508" width="180" height="62" rx="8" fill="#161b22" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="520" y="534" fill="#e6edf3" font-size="13" font-weight="600" text-anchor="middle">Wazuh SIEM</text>
+  <text x="520" y="552" fill="#9aa4b2" font-size="11" text-anchor="middle">decoders + rules</text>
+
+  <!-- Analyst -->
+  <rect x="700" y="470" width="160" height="64" rx="8" fill="#161b22" stroke="#2f9e44" stroke-width="1.5"/>
+  <text x="780" y="498" fill="#e6edf3" font-size="14" font-weight="600" text-anchor="middle">SOC analyst</text>
+  <text x="780" y="517" fill="#9aa4b2" font-size="11" text-anchor="middle">triage &amp; respond</text>
+
+  <!-- arrows -->
+  <line x1="182" y1="146" x2="231" y2="148" stroke="#8b949e" stroke-width="1.6" marker-end="url(#arr)"/>
+  <text x="186" y="138" fill="#9aa4b2" font-size="10">prompt</text>
+
+  <line x1="635" y1="150" x2="697" y2="152" stroke="#8b949e" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="697" y1="178" x2="635" y2="178" stroke="#8b949e" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <line x1="430" y1="338" x2="388" y2="416" stroke="#8b949e" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="368" y1="476" x2="320" y2="504" stroke="#8b949e" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="455" y1="476" x2="500" y2="504" stroke="#8b949e" stroke-width="1.6" marker-end="url(#arr)"/>
+  <text x="600" y="360" fill="#9aa4b2" font-size="10">JSON / syslog</text>
+
+  <line x1="395" y1="536" x2="695" y2="512" stroke="#8b949e" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="610" y1="528" x2="698" y2="510" stroke="#8b949e" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <line x1="182" y1="320" x2="213" y2="300" stroke="#e8590c" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  <text x="150" y="290" fill="#e8590c" font-size="10">validates</text>
+</svg>

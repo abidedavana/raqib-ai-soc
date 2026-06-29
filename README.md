@@ -9,6 +9,14 @@
 [![MITRE ATLAS](https://img.shields.io/badge/Mapped-MITRE%20ATLAS-red.svg)](docs/owasp-atlas-mapping.md)
 [![$0 stack](https://img.shields.io/badge/Cost-%240%20fully%20local-brightgreen.svg)](#the-0-self-hosted-stack)
 
+<p align="center">
+  <img src="docs/diagrams/architecture.svg" alt="Raqib AI-SOC architecture: gateway, layered detection, SOAR, event pipeline, dashboard and Wazuh SIEM" width="920">
+</p>
+
+<!-- 📸 Add a dashboard screenshot once you've run it (see docs/quickstart.md), then uncomment:
+<p align="center"><img src="docs/screenshots/dashboard.png" alt="Raqib SOC dashboard" width="920"></p>
+-->
+
 ---
 
 This is **offense-informed defense** for the threat model that WAFs and API gateways were never built for — the threat model that now leads the [OWASP Top 10 for LLM Applications 2025](https://owasp.org/www-project-top-10-for-large-language-model-applications/) and that G42/Core42, Help AG, and CPX are actively building practices around.
